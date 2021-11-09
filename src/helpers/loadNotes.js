@@ -1,0 +1,20 @@
+import { db } from "../firebase/firebase-config"
+
+
+export const loadNotes = async (uid) => {
+
+  const notesSnap = await db.getDocs(db.collection(db.getFirestore(), `${uid}/journal/notes`));
+  const notes = [];
+
+  notesSnap.forEach(snapHijo => {
+    notes.push({
+      id: snapHijo.id,
+      ...snapHijo.data()
+    })
+  })
+
+  console.log(notes)
+
+  return notes;
+
+}
